@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <!-- ajax ライブラリの豊富なエコシステムや、汎用的なユーティリティ	-->
+        <!-- メソッドがたくさんあるので、Vue のコアはそれらを再発明せずに	-->
+        <!-- 小さく保たれています。この結果として、慣れ親しんでいるものだけを	-->
+        <!-- 使えるような自由さを Vue は持ち合わせています。			-->
+        <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    </head>
+    <body>
+        <h1>算出プロパティとウォッチャ</h1>
+        <a href="https://jp.vuejs.org/v2/guide/computed.html">公式</a>
+        <div id="vm1">
+            <h2>算出プロパティvsメソッド</h2>
+            <p>Original message: "{{ message }}"</p>
+            <p>テンプレート内にロジックを組み込むのはNG: {{ message.split('').reverse().join('') }}</p>
+            <p>Computed reversed message: "{{ reversedMessage }}"</p>
+            <p>Function reverse message: "{{ reverseMessage() }}"</p>
+            <p>画面上の振る舞いは全て同様だが、算出プロパティの方がリアクティブな依存関係にもとづきキャッシュされる点で、メソッド呼び出しよりbetter<br>（コンソールから
+                <code>
+                    vm1.reversedMessage
+                    vm1.reverseMessage()
+                </code>
+                を呼び出した際の出力の違いに注目）
+            </p>
+        </div>
+
+        <h2>算出プロパティvsウォッチャ</h2>
+        <div id="vm2">
+            <p>watch:でデータの変更を監視できる</p>
+            <p>ウォッチャを利用した例：{{ fullName }}</p>
+            <p>Vueのコードが命令的で冗長である</p>
+        </div>
+        <div id="vm3">
+            <p>算出プロパティを利用した例：{{ fullName }}</p>
+            <p>Vueのコードがはるかに簡潔</p>
+        </div>
+
+        <h2>ウォッチャが必要な場合</h2>
+        <p>A.データが変わるのに応じて非同期やコストの高い処理を実行したい場合に便利</p>
+        <p>この場合では、watch オプションを利用することで、非同期処理(APIのアクセス)の実行や、処理をどのくらいの頻度で実行するかを制御したり、最終的な answer が取得できるまでは中間の状態にしておく、といったことが可能になっています。<br>
+        これらはいずれも算出プロパティでは実現できません。</p>
+        <div id="watch-example">
+            <p>
+                例　Ask a yes/no question:
+                <input v-model="question">
+            </p>
+            <p>{{ answer }}</p>
+            <p>
+                算出プロパティで非同期処理が本当に実現できないのかテスト
+                <input v-model="question2">
+            </p>
+            <p>{{ test }}</p>
+        </div>
+
+        
+        <script src="index.js"></script>
+    </body>
+</html>
